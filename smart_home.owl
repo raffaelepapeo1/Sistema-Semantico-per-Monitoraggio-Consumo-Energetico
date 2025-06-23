@@ -1,0 +1,174 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xml:base="http://example.org/smarthome.owl"
+         xmlns="http://example.org/smarthome.owl#">
+
+<owl:Ontology rdf:about="http://example.org/smarthome.owl"/>
+
+<owl:ObjectProperty rdf:about="#usaInFascia">
+  <rdfs:range rdf:resource="#FasciaOraria"/>
+  <rdfs:domain rdf:resource="#UsoDispositivo"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#usaDispositivo">
+  <rdfs:range rdf:resource="#Elettrodomestico"/>
+  <rdfs:domain rdf:resource="#UsoDispositivo"/>
+  <rdfs:domain rdf:resource="#EventoConsumo"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#siTrovaIn">
+  <rdfs:domain rdf:resource="#Elettrodomestico"/>
+  <rdfs:range rdf:resource="#Stanza"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#haTipoConsumo">
+  <rdfs:domain rdf:resource="#Elettrodomestico"/>
+  <rdfs:range rdf:resource="#ConsumoEnergetico"/>
+</owl:ObjectProperty>
+
+<owl:ObjectProperty rdf:about="#avvieneInFascia">
+  <rdfs:range rdf:resource="#FasciaOraria"/>
+  <rdfs:domain rdf:resource="#EventoConsumo"/>
+</owl:ObjectProperty>
+
+<owl:Class rdf:about="#Elettrodomestico">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#FasciaOraria">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#Stanza">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ConsumoEnergetico">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#UsoDispositivo">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ConsumoAlto">
+  <rdfs:subClassOf rdf:resource="#ConsumoEnergetico"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ConsumoMedio">
+  <rdfs:subClassOf rdf:resource="#ConsumoEnergetico"/>
+</owl:Class>
+
+<owl:Class rdf:about="#ConsumoBasso">
+  <rdfs:subClassOf rdf:resource="#ConsumoEnergetico"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EventoConsumo">
+  <rdfs:subClassOf rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</owl:Class>
+
+<owl:Class rdf:about="#EventoDiConsumoElevato">
+  <owl:equivalentClass>
+    <owl:Class>
+      <owl:intersectionOf rdf:parseType="Collection">
+        <rdf:Description rdf:about="#EventoConsumo"/>
+        <owl:Restriction>
+          <owl:someValuesFrom>
+            <owl:Restriction>
+              <owl:someValuesFrom rdf:resource="#ConsumoAlto"/>
+              <owl:onProperty rdf:resource="#haTipoConsumo"/>
+            </owl:Restriction>
+          </owl:someValuesFrom>
+          <owl:onProperty rdf:resource="#usaDispositivo"/>
+        </owl:Restriction>
+      </owl:intersectionOf>
+    </owl:Class>
+  </owl:equivalentClass>
+  <rdfs:subClassOf rdf:resource="#EventoConsumo"/>
+</owl:Class>
+
+<owl:NamedIndividual rdf:about="#lavatrice">
+  <rdf:type rdf:resource="#Elettrodomestico"/>
+  <siTrovaIn rdf:resource="#cucina"/>
+  <haTipoConsumo rdf:resource="#medio"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#forno">
+  <rdf:type rdf:resource="#Elettrodomestico"/>
+  <siTrovaIn rdf:resource="#cucina"/>
+  <haTipoConsumo rdf:resource="#consumoalto1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#condizionatore">
+  <rdf:type rdf:resource="#Elettrodomestico"/>
+  <siTrovaIn rdf:resource="#salotto"/>
+  <haTipoConsumo rdf:resource="#alto"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#cucina">
+  <rdf:type rdf:resource="#Stanza"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#salotto">
+  <rdf:type rdf:resource="#Stanza"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#giorno">
+  <rdf:type rdf:resource="#FasciaOraria"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#notte">
+  <rdf:type rdf:resource="#FasciaOraria"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#alto">
+  <rdf:type rdf:resource="#ConsumoAlto"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#medio">
+  <rdf:type rdf:resource="#ConsumoMedio"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#uso1">
+  <rdf:type rdf:resource="#UsoDispositivo"/>
+  <usaDispositivo rdf:resource="#lavatrice"/>
+  <usaInFascia rdf:resource="#giorno"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#uso2">
+  <rdf:type rdf:resource="#UsoDispositivo"/>
+  <usaDispositivo rdf:resource="#condizionatore"/>
+  <usaInFascia rdf:resource="#notte"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#consumoalto1">
+  <rdf:type rdf:resource="#ConsumoAlto"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#lampada">
+  <rdf:type rdf:resource="#Elettrodomestico"/>
+  <siTrovaIn rdf:resource="#salotto"/>
+  <haTipoConsumo rdf:resource="#consumobasso1"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#consumobasso1">
+  <rdf:type rdf:resource="#ConsumoBasso"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#evento1">
+  <rdf:type rdf:resource="#EventoConsumo"/>
+  <usaDispositivo rdf:resource="#forno"/>
+  <avvieneInFascia rdf:resource="#giorno"/>
+</owl:NamedIndividual>
+
+<owl:NamedIndividual rdf:about="#evento2">
+  <rdf:type rdf:resource="#EventoConsumo"/>
+  <usaDispositivo rdf:resource="#lampada"/>
+  <avvieneInFascia rdf:resource="#notte"/>
+</owl:NamedIndividual>
+
+
+</rdf:RDF>
